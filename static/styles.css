@@ -460,30 +460,30 @@ body {
 /* Features Grid */
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Auto columns */
+    grid-template-columns: repeat(4, 1fr); /* Always start with 4 columns */
     gap: var(--space-lg);
     margin-top: var(--space-2xl);
     max-width: 100%;
     width: 100%;
 }
 
-/* For 4 columns specifically */
-.features-grid.four-columns {
-    grid-template-columns: repeat(4, 1fr); /* Force 4 columns */
-}
 
+/* For 4 columns specifically */
 @media (max-width: 1200px) {
-    .features-grid.four-columns {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
     }
 }
 
 @media (max-width: 768px) {
-    .features-grid.four-columns {
+    .features-grid {
         grid-template-columns: 1fr; /* 1 column on mobile */
+        gap: var(--space-md);
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
-
 .feature-card {
     background: var(--bg-surface);
     padding: var(--space-xl);
