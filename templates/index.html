@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#2e7d32">
+    <title>BioExpert AI - Biology & Biotechnology Assistant</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧬</text></svg>">
+    <meta name="description" content="Expert AI assistant for Biology, Biotechnology, Bioinformatics, and Pharmacology">
+</head>
+<body>
+    <div id="container">
+        <!-- Sidebar -->
+        <div id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <div class="brand-icon">AI</div>
+                    <div>
+                        <h1>BioExpert AI</h1>
+                        <div class="brand-subtitle">Your Scientific Assistant</div>
+                    </div>
+                </div>
+                
+                <button id="new-chat-btn">New Chat</button>
+            </div>
+            
+            <div class="sidebar-content">
+                <div class="section-title">Recent Conversations</div>
+                <ul id="history-list">
+                    {% for msg in history %}
+                    <li class="history-item" onclick="loadHistory('{{ loop.index }}')">
+                        <div class="history-item-title">
+                            <span>{{ msg.role.capitalize() }}</span>
+                            <span class="history-item-time">Just now</span>
+                        </div>
+                        <div class="history-item-preview">{{ msg.content[:50] }}{% if msg.content|length > 50 %}...{% endif %}</div>
+                    </li>
+                    {% else %}
+                    <li class="history-item">
+                        <div class="history-item-preview">No conversations yet</div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                
+                <div class="section-title">Quick Actions</div>
+                <div class="quick-actions">
+                    <button class="quick-action-btn" onclick="suggestQuestion('Explain CRISPR-Cas9 technology')">
+                        CRISPR
+                    </button>
+                    <button class="quick-action-btn" onclick="suggestQuestion('What is pharmacogenomics?')">
+                        Pharma
+                    </button>
+                    <button class="quick-action-btn" onclick="suggestQuestion('Explain protein folding')">
+                        Proteins
+                    </button>
+                    <button class="quick-action-btn" onclick="suggestQuestion('What is Alignment in Bioinformatics?')">
+                        Alignment
+                    </button>
+                    <button class="quick-action-btn" onclick="suggestQuestion('What is Pharmacodynamics?')">
+                        Pharmacodynamics
+                    </button>
+                    <button class="quick-action-btn" onclick="suggestQuestion('Explain evolution.')">
+                        Evolution
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Chat Area -->
+        <div id="chat-area">
+            <div id="chat-header">
+                <div class="domain-selector">
+                    <span class="domain-badge">Biology Expert</span>
+                </div>
+                <div class="chat-info">
+                    <div class="status-indicator"></div>
+                    <span>AI Assistant Online</span>
+                </div>
+            </div>
+
+            <!-- Chat Messages Container -->
+            <div id="chatbox">
+                {% if not history %}
+                <!-- Welcome Screen -->
+                <div class="welcome-screen">
+                    <div class="welcome-icon">🧬</div>
+                    <h1 class="welcome-title">Welcome to BioExpert AI</h1>
+                    <p class="welcome-subtitle">
+                        Your expert assistant in Biology, Biotechnology, Bioinformatics, and Pharmacology. 
+                        Ask me anything about scientific concepts, research methods, or latest discoveries.
+                    </p>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🔬</div>
+                            <h3 class="feature-title">Biology Expert</h3>
+                            <p class="feature-description">
+                                Molecular biology, genetics, ecology, physiology, and evolutionary biology with detailed scientific explanations.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🧪</div>
+                            <h3 class="feature-title">Biotechnology</h3>
+                            <p class="feature-description">
+                                CRISPR technology, fermentation processes, bioreactors, and industrial applications.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">💻</div>
+                            <h3 class="feature-title">Bioinformatics</h3>
+                            <p class="feature-description">
+                                Sequence analysis, structural biology, computational tools, and data analysis methods.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">💊</div>
+                            <h3 class="feature-title">Pharmacology</h3>
+                            <p class="feature-description">
+                                Drug discovery, pharmacokinetics, therapeutic applications, and clinical research.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                    <!-- Messages will be dynamically added here by JavaScript -->
+                {% endif %}
+            </div>
+
+            <!-- Quick Suggestions -->
+            <div class="quick-suggestions">
+                <button class="suggestion-btn" onclick="suggestQuestion('Explain the central dogma of molecular biology')">
+                    <i class="fas fa-dna"></i> Central Dogma
+                </button>
+                <button class="suggestion-btn" onclick="suggestQuestion('What are the applications of PCR in biotechnology?')">
+                    <i class="fas fa-vial"></i> PCR Applications
+                </button>
+                <button class="suggestion-btn" onclick="suggestQuestion('How does BLAST algorithm work in bioinformatics?')">
+                    <i class="fas fa-search"></i> BLAST Algorithm
+                </button>
+                <button class="suggestion-btn" onclick="suggestQuestion('Explain drug-receptor interactions in pharmacology')">
+                    <i class="fas fa-capsules"></i> Drug Interactions
+                </button>
+            </div>
+
+            <!-- Input Area -->
+            <div id="input-area">
+                <div class="input-wrapper">
+                    <textarea id="user-input" 
+                              placeholder="Ask about biology, biotechnology, bioinformatics, or pharmacology..." 
+                              rows="1"
+                              aria-label="Type your message"></textarea>
+                    <div class="input-actions">
+                        <button class="action-btn" onclick="attachFile()" aria-label="Attach file">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <button class="action-btn" onclick="voiceInput()" aria-label="Voice input">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                    </div>
+                </div>
+                <button id="send-btn" aria-label="Send message">
+                    <span>Send</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
