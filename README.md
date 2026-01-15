@@ -30,12 +30,15 @@ Biochat/
 ├── requirements.txt
 
 ├── templates/
-      │   └── index.html
+
+│   └── index.html
 
 ├── static/
-      │   ├── styles.css
-      │   └── script.js
-      
+
+│   ├── styles.css
+
+│   └── script.js
+
 ├── .gitignore
 
 └── README.md
