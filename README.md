@@ -31,13 +31,13 @@ Biochat/
 
 ├── templates/
 
-│   └── index.html
+      │   └── index.html
 
 ├── static/
 
-│   ├── styles.css
+      │   ├── styles.css
 
-│   └── script.js
+      │   └── script.js
 
 ├── .gitignore
 
