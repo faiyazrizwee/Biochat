@@ -24,6 +24,8 @@ BioChat is a web-based AI chatbot designed to assist biologists, bioinformaticia
 ## Project Structure
 
 Biochat/
+
+
 ├── main.py
 ├── requirements.txt
 ├── templates/
