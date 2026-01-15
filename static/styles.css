@@ -457,43 +457,381 @@ body {
     line-height: 1.6;
 }
 
-/* Features Grid */
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Auto columns */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: var(--space-lg);
     margin-top: var(--space-2xl);
     max-width: 100%;
     width: 100%;
 }
 
-/* For 4 columns specifically */
-.features-grid.four-columns {
-    grid-template-columns: repeat(4, 1fr); /* Force 4 columns */
+/* For 4 columns on desktop */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
 }
 
 @media (max-width: 1200px) {
-    .features-grid.four-columns {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-lg);
+    }
+    
+    .feature-card {
+        min-height: 300px;
     }
 }
 
 @media (max-width: 768px) {
-    .features-grid.four-columns {
-        grid-template-columns: 1fr; /* 1 column on mobile */
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .feature-card {
+        min-height: auto;
+        padding: var(--space-lg);
+    }
+    
+    .welcome-screen {
+        padding: var(--space-lg);
+        justify-content: flex-start;
+        padding-top: var(--space-xl);
+    }
+    
+    .welcome-icon {
+        font-size: 60px;
+        margin-bottom: var(--space-md);
+    }
+    
+    .welcome-title {
+        font-size: 1.75rem;
+        margin-bottom: var(--space-sm);
+    }
+    
+    .welcome-subtitle {
+        font-size: 1rem;
+        margin-bottom: var(--space-xl);
+        padding: 0 var(--space-md);
     }
 }
 
-.feature-card {
-    background: var(--bg-surface);
-    padding: var(--space-xl);
-    border-radius: var(--radius-lg);
-    text-align: center;
-    transition: all var(--transition-normal);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-md);
-    position: relative;
-    overflow: hidden;
+/* Add these mobile fixes after the existing media queries */
+
+/* Mobile-specific fixes */
+@media (max-width: 768px) {
+    /* Fix container and sidebar */
+    #container {
+        flex-direction: column;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+    
+    #sidebar {
+        width: 100%;
+        height: auto;
+        min-height: 200px;
+        max-height: 40vh;
+        overflow-y: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        min-width: auto;
+        flex-shrink: 0;
+    }
+    
+    .sidebar-header {
+        padding: var(--space-md);
+    }
+    
+    .sidebar-content {
+        padding: var(--space-md);
+        flex: 1;
+        min-height: 0;
+    }
+    
+    /* Fix chat area */
+    #chat-area {
+        flex: 1;
+        min-height: 60vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    #chat-header {
+        padding: var(--space-md);
+        min-height: 56px;
+        flex-shrink: 0;
+    }
+    
+    /* Fix chatbox scrolling */
+    #chatbox {
+        padding: var(--space-md);
+        flex: 1;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Fix welcome screen */
+    .welcome-screen {
+        height: auto;
+        min-height: 100%;
+        padding: var(--space-lg) var(--space-md);
+        justify-content: flex-start;
+    }
+    
+    /* Fix messages */
+    .message {
+        max-width: 90%;
+        margin-bottom: var(--space-md);
+    }
+    
+    .message-content {
+        padding: var(--space-md);
+        font-size: 0.9375rem;
+        line-height: 1.5;
+    }
+    
+    /* Fix input area */
+    #input-area {
+        padding: var(--space-md);
+        flex-direction: column;
+        gap: var(--space-md);
+        flex-shrink: 0;
+        min-height: auto;
+    }
+    
+    .input-wrapper {
+        width: 100%;
+    }
+    
+    #user-input {
+        padding: var(--space-md);
+        padding-right: 80px;
+        font-size: 16px; /* Prevents iOS zoom */
+        min-height: 52px;
+        max-height: 120px;
+    }
+    
+    .input-actions {
+        right: var(--space-sm);
+        bottom: var(--space-sm);
+    }
+    
+    #send-btn {
+        width: 100%;
+        padding: var(--space-md);
+        min-width: auto;
+    }
+    
+    /* Fix quick suggestions */
+    .quick-suggestions {
+        padding: var(--space-md);
+        gap: var(--space-xs);
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-shrink: 0;
+    }
+    
+    .suggestion-btn {
+        padding: var(--space-sm) var(--space-md);
+        font-size: 0.8125rem;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    
+    /* Fix history list */
+    #history-list {
+        max-height: 150px;
+        overflow-y: auto;
+    }
+    
+    .history-item {
+        padding: var(--space-sm);
+        margin-bottom: var(--space-xs);
+    }
+    
+    .history-item-preview {
+        font-size: 0.75rem;
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+    }
+    
+    /* Fix quick actions */
+    .quick-actions {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-xs);
+    }
+    
+    .quick-action-btn {
+        padding: var(--space-xs) var(--space-sm);
+        font-size: 0.7rem;
+        min-height: 32px;
+    }
+}
+
+/* Small phone fixes */
+@media (max-width: 480px) {
+    .features-grid {
+        gap: var(--space-md);
+    }
+    
+    .feature-card {
+        padding: var(--space-md);
+    }
+    
+    .feature-icon {
+        width: 56px;
+        height: 56px;
+        line-height: 56px;
+        font-size: 28px;
+        margin-bottom: var(--space-md);
+    }
+    
+    .feature-title {
+        font-size: 1.1rem;
+        margin-bottom: var(--space-sm);
+    }
+    
+    .feature-description {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+    
+    .brand h1 {
+        font-size: 1.25rem;
+    }
+    
+    .brand-subtitle {
+        font-size: 0.75rem;
+    }
+    
+    #new-chat-btn {
+        padding: var(--space-sm) var(--space-md);
+        font-size: 0.9rem;
+    }
+    
+    .domain-badge {
+        font-size: 0.75rem;
+        padding: var(--space-xs) var(--space-sm);
+    }
+    
+    .message {
+        max-width: 95%;
+    }
+    
+    .message-content {
+        padding: var(--space-sm);
+        font-size: 0.875rem;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+    :root {
+        --space-xs: 3px;
+        --space-sm: 6px;
+        --space-md: 12px;
+        --space-lg: 18px;
+        --space-xl: 24px;
+        --space-2xl: 32px;
+    }
+    
+    .feature-card {
+        padding: var(--space-md);
+    }
+    
+    .feature-icon {
+        width: 48px;
+        height: 48px;
+        line-height: 48px;
+        font-size: 24px;
+    }
+    
+    .feature-title {
+        font-size: 1rem;
+    }
+    
+    .feature-description {
+        font-size: 0.8rem;
+    }
+    
+    .suggestion-btn {
+        padding: var(--space-xs) var(--space-sm);
+        font-size: 0.75rem;
+    }
+    
+    .quick-action-btn {
+        font-size: 0.65rem;
+        padding: var(--space-xs);
+    }
+}
+
+/* Fix for iOS Safari */
+@supports (-webkit-touch-callout: none) {
+    #chatbox {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    #sidebar {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .quick-suggestions {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Prevent text size adjustment on mobile */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+/* Fix viewport height issues on mobile */
+@media (max-height: 700px) {
+    .welcome-screen {
+        padding-top: var(--space-lg);
+    }
+    
+    .welcome-icon {
+        font-size: 50px;
+        margin-bottom: var(--space-md);
+    }
+    
+    .welcome-title {
+        font-size: 1.5rem;
+        margin-bottom: var(--space-sm);
+    }
+    
+    .features-grid {
+        margin-top: var(--space-xl);
+        gap: var(--space-md);
+    }
+    
+    .feature-card {
+        padding: var(--space-md);
+        min-height: auto;
+    }
+}
+
+:root {
+    --vh: 1vh;
+}
+
+#container {
+    height: 100vh; /* Fallback */
+    height: calc(var(--vh, 1vh) * 100);
 }
 
 .feature-card:hover {

@@ -680,3 +680,18 @@ window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(adjustTextareaHeight, 100);
 });
+
+// Add to your script.js file
+function fixViewportHeight() {
+    // First we get the viewport height and we multiply it by 1% to get a value for a vh unit
+    let vh = window.innerHeight * 0.01;
+    // Then we set the value in the --vh custom property to the root of the document
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+// Initial call
+fixViewportHeight();
+
+// Update on resize and orientation change
+window.addEventListener('resize', fixViewportHeight);
+window.addEventListener('orientationchange', fixViewportHeight);
